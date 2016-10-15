@@ -36,6 +36,23 @@ int ListInsert( LinkList L, int i, ElemType e ){
 	return 1;
 }
 
+//删除第i个元素，由e返回 
+int ListDelete(LinkList L, int i, ElemType *e) {
+	LinkList p, q;
+	p = L;
+	int j = 0;
+	while( p->next && j<i-1){//令p 指向i的前驱 
+		p = p->next;
+		j++;
+	}
+	if(!(p->next) || j>i-1) return 0;
+	q = p->next;//q指向第i个元素 
+	p->next = q->next;//p指向i的后驱 
+	*e = q->data;
+	free(q);//释放结点 
+	return 1;
+}
+
 //获取第i个元素，由e返回 
 int GetElem( LinkList L, int i, ElemType *e) {
 	LinkList p;
@@ -54,7 +71,8 @@ int main(){
 	int N;
 	ElemType X;
 	LinkList L;
-	int e;
+	int gete;
+	int dele;
 	L = InitList();
 	scanf("%d", &N);
     while ( N-- ) {
@@ -63,7 +81,9 @@ int main(){
         if ( flag==0 ) printf("Wrong Answer\n");
     }
 	for ( LinkList P=L->next; P; P = P->next ) printf("%d ", P->data);
-	GetElem(L, 1, &e);
-	printf("\n%d", e);
+	ListDelete( L, 1, &dele);
+	printf("\n%d", dele);
+	GetElem(L, 1, &gete);
+	printf("\n%d", gete);
     return 0;
 }
