@@ -20,6 +20,15 @@ int InitQueue( LinkQueue *Q ){
 	return 1;
 }
 
+int DestroyQueue(LinkQueue *Q){
+	while(Q->front){
+		Q->rear = (Q->front)->next;
+		free(Q->front);
+		Q->front = Q->rear;
+	}
+	return 1;
+}
+
 int EnQueue( LinkQueue *Q, ElemType e ){
 	QueuePtr p;
 	p = (QueuePtr)malloc(sizeof(Node));
@@ -43,17 +52,22 @@ int DeQueue( LinkQueue *Q, ElemType *e ){
 }
 
 int QueueTraverse( LinkQueue Q ){
+	printf("Queue:");
 	while(Q.front < Q.rear){
 		printf("%d\t", (Q.front->next)->data);
 		Q.front = Q.front->next;
 	}
+	printf("\n");
 }
 
 void main(){
+	ElemType e;
 	LinkQueue Q;
 	InitQueue(&Q);
 	EnQueue(&Q,11);
 	EnQueue(&Q,22);
 	EnQueue(&Q,33);
+	QueueTraverse(Q);
+	DeQueue(&Q, &e);
 	QueueTraverse(Q);
 }
