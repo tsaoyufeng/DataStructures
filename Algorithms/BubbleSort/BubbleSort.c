@@ -7,8 +7,8 @@ void bubble_sort(int *a, int size){
 			if(a[j] > a[j+1]){
 				int temp;
 				temp = a[j+1];
-				 *(a+j+1) = *(a+j);
-				 *(a+j) = temp;
+				 a[j+1] = a[j];
+				 a[j] = temp;
 			}
 		}
 	}
