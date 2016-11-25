@@ -62,15 +62,20 @@ bool insert(LinkedList L, int index, E element) {
 	new_node->data = element;
 	new_node->next = cursor->next;
 	cursor->next = new_node;
-	printf("insert\n");
-	printf("new_node->data=%d\n", new_node->data);
 	return TRUE;
 }
 
 
 
-void clear() {
-	
+void clear(LinkedList L) {
+	LinkedList p = L->next;
+	LinkedList q;
+	while (p) {
+		q = p->next;
+		free(p);
+		p = q;
+	}
+	L->next = NULL;
 }
 
 
@@ -83,7 +88,15 @@ E get(LinkedList L, int index) {
 	return cursor->data;
 }
 
-
+int size(LinkedList L) {
+	int i = 0;
+	LinkedList cursor = L->next;
+	while (cursor) {
+		cursor = cursor->next;
+		++i;
+	}
+	return i;
+}
 
 int indexOf(LinkedList L, E element) {
 	LinkedList cursor = L;
@@ -129,18 +142,11 @@ bool isEmpty(LinkedList L) {
 	return FALSE;
 }
 
-int size(LinkedList L) {
-	int i = 0;
-	LinkedList cursor = L->next;
-	while (TRUE) {
-		cursor = cursor->next;
-		++i;
-		if (cursor->next == NULL) {
-			++i;
-			break;
-		}
-	}
-	return i;
+
+bool destroy(LinkedList L) {
+	clear(L);
+	free(L);
+	return TRUE;
 }
 
 
@@ -182,53 +188,8 @@ void main(){
 	del(L, 4);
 	printList(L);
 	printf("indexof9=%d\n", indexOf(L, 9));
+	clear(L);
+	printf("size=%d\n", size(L));
 }
-////在带头结点的单链线性表L（L为头指针，单链表可由头指针唯一确定）中第i个位置之前插入元素e 
-//int insert( Node *root, int i, int e ){
-//	Node *cursor, *new_node;
-//	cursor = root;
-//	int j = -1;
-//	while ( cursor && j<i-1 ){
-//		cursor = cursor->link;
-//		j++;
-//	} 
-//	//if ( !p || j>i-1 ) return 0;
-//	new_node = (Node *)malloc(sizeof(Node));
-//	new_node->value = e;
-//	new_node->link = cursor->link;
-//	cursor->link = new_node;
-//	return TRUE;
-//}
-//
-////删除第i个元素，由e返回 
-//int ListDelete(Node *root, int i) {
-//	Node *cursor, *q;
-//	cursor = root;
-//	int j = -1;
-//	while( cursor->link && j<i-1){//令cursor 指向i的前驱 
-//		cursor = cursor->link;
-//		j++;
-//	}
-//	//if(!(p->next) || j>i-1) return 0;
-//	q = cursor->link;//q指向第i个元素 
-//	cursor->link = q->link;//cursor指向i的后驱 
-//	//*e = q->data;
-//	//free(q);//释放结点 
-//	return q->value;
-//}
-//
-////获取第i个元素，由e返回 
-//int GetElem( LinkList L, int i, ElemType *e) {
-//	LinkList p;
-//	p = L->next;
-//	int j = 1;
-//	while( p && j<i){
-//		p = p->next;
-//		j++;
-//	}
-//	if( !p || j>i) return 0;//第i个元素不存在
-//	*e = p->data;
-//	return 1; 
-//}
- 
+
 
