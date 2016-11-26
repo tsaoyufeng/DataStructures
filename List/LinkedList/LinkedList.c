@@ -168,6 +168,8 @@ void printList(LinkedList L) {
 
 void main(){
 	LinkedList L = initLinkedList();
+	addFirst(L, 1);
+	addFirst(L, 1);
 	insert(L, 0, 5);
 	insert(L, 0, 4);
 	insert(L, 0, 3);
